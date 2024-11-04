@@ -1,18 +1,20 @@
 package HashTable;
 
-public class HashTable<K, V>{
+import java.util.Iterator;
+
+public class HashTable<K, V>  implements Iterable<Node<K, V>> {
     private static final int defCapacity = 10;
     private static final float loadFactor = 0.7f;
 
     private Node<K, V>[] buckets;
     private int size;
 
-//    public HashTable() {
-//        this(defCapacity);
-//    }
-
     public HashTable() {
-        this.buckets = new Node[defCapacity];
+        this(defCapacity);
+    }
+
+    public HashTable(int capacity) {
+        this.buckets = new Node[capacity];
         this.size = 0;
     }
 
@@ -123,5 +125,8 @@ public class HashTable<K, V>{
         return (hash & 0x7fffffff) % buckets.length;
     }
 
-
+    @Override
+    public Iterator<Node<K, V>> iterator() {
+        return new MyHashTableIterator<K, V>(buckets);
+    }
 }
